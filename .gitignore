@@ -7,3 +7,5 @@ deploy.sh
 /package-lock.json
 /Aurora-plugin/**/.git
 /Aurora-plugin/**/node_modules
+storage/data/*.lock
+storage/data/*.tmp
