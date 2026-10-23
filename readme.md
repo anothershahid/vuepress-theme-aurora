@@ -1,108 +1,75 @@
-- [动漫Demo](https://aurora-animate.xcye.xyz/)
-- [非动漫Demo](https://aurora-common.xcye.xyz/)
-- [文档](https://aurora.xcye.xyz/)
+# Aurora বাংলা (PHP + JSON)
 
+এই রিপোজিটরি এখন VuePress-নির্ভর নয়; PHP 8.1+ এবং JSON data storage ব্যবহার করে standalone Aurora-style ব্লগ অ্যাপ।
 
-## 🔥Introduce
+## ফিচার (বাংলা UI)
+- হোমপেজ + পোস্ট তালিকা + পোস্ট ডিটেইল
+- ক্যাটাগরি/ট্যাগ/টাইমলাইন
+- “বলেছি” (moments)
+- বন্ধু লিংক
+- ফটো অ্যালবাম
+- মিউজিক প্লেয়ার
+- মন্তব্য ফর্ম + মডারেশন
+- সার্চ/ফিল্টার + pagination
 
-![](https://img.shields.io/npm/v/vuepress-theme-aurora)![npm](https://img.shields.io/npm/dm/vuepress-theme-aurora)![](https://img.shields.io/github/stars/qsyyke/vuepress-theme-aurora?style=social)
+## রান করার নিয়ম (লোকাল)
+```bash
+php -S 127.0.0.1:8080 -t public
+```
+তারপর ব্রাউজারে `http://127.0.0.1:8080`
 
-![image-20211208135404881](https://picture.xcye.xyz/image-20211208135404881.png?x-oss-process=style/pictureProcess1)
+## প্রয়োজনীয়তা
+- PHP 8.1+
+- JSON read/write এর জন্য `storage/data` ডিরেক্টরিতে write permission
 
----
+## নিরাপত্তা
+- Context-aware escaping (`htmlspecialchars`)
+- CSRF token validation (সব POST action)
+- Comment input validation (length/email/url/honeypot/rate-limit)
+- Atomic JSON write + file locking (`flock`)
+- Secure headers: CSP, X-Content-Type-Options, X-Frame-Options, Referrer-Policy
+- Session cookie: httponly + samesite + HTTPS হলে secure
+- Data files web root-এর বাইরে (`storage/data`), `.htaccess` deny sample যুক্ত
 
-[Aurora](https://www.npmjs.com/package/vuepress-theme-aurora)是一款基于**Vuepress2**的博客主题，将本地**Markdown**文件解析成静态html页面，作为博客文章。搭配**说说**，**时间轴**，**文章分类**，**评论**，**友情链接**，**相册**，**音乐播放器**等特色功能，给您不一样的使用体验。
+## writable path
+- `storage/data/comments.json`
+- প্রয়োজনে import/update এর সময় `storage/data/posts.json` ইত্যাদি
 
-- 🏆**100%自定义**
-- 🌈**简洁，漂亮**
-- 🎨**高扩展**
-- 💫**多功能**
-- 📖**配置文档**
+## JSON ডাটা সম্পাদনা
+সব data file `storage/data/*.json`-এ। ফাইল save করার সময় valid JSON বজায় রাখুন।
 
+## মন্তব্য মডারেশন
+- URL: `/admin/comments`
+- প্রথমে পাসওয়ার্ড লগইন
+- default password: `change-me-now` (চালুর আগে অবশ্যই বদলান)
+- hash রাখা আছে `storage/config/app.php`-এ (`password_hash/password_verify` flow)
 
-## ⚓Quick start
+## Markdown → JSON মাইগ্রেশন
+পুরোনো `docs/**/*.md` থেকে পোস্ট ইমপোর্ট:
+```bash
+php scripts/import-markdown.php
+```
+ম্যাপিং:
+- `title`
+- `date`
+- `category/categories`
+- `tag/tags`
+- `cover`
+- `content`
 
-### Node安装
-
-运行环境需要依赖`node`，如果您未安装`node`，请先安装node，我安装的版本为`v14.17.3`
-
-> node安装教程可查看[Node 安装](https://aurora.xcye.xyz/node.html)
-
-### 安装CLI
-
-
-> 请不要直接拉取该仓库运行，该仓库经常会push新东西进来，运行过程中，可能会报错，请使用按照下面步骤进行主题的安装！
-
-
-```sh
-  npm i vuepress-theme-cli -g
+## টেস্ট/ভ্যালিডেশন
+```bash
+bash scripts/lint-php.sh
+php tests/validate-json.php
+bash tests/smoke.sh
 ```
 
+## Shared Hosting Deploy
+1. `public` কে document root করুন (বা `public/index.php` rewrite)
+2. `storage` web root-এর বাইরে রাখুন
+3. `storage/data`-তে write permission দিন (0640/0750 নীতি)
+4. `storage/config/app.php`-এর admin hash পরিবর্তন করুন
 
-- [视频教程](https://ooszy.cco.vin/theme-template/%E6%9C%80%E7%BB%88%E7%89%88%E6%9C%AC.mp4)
-
-### 博客搭建
-
-待**vuepress-theme-cli**安装完成，进入**cmd**，运行下面`aurora`命令，根据提示输入对应内容
-
-```sh
-aurora demo-blog
-```
-
-> 若提示，请看[这里解决](https://aurora.xcye.xyz/issue/cli-issue.md)
->
-> ```sh
-> 'aurora' 不是内部或外部命令，也不是可运行的程序
-> 或批处理文件。
-> ```
-
-
-
-![image-20211130123037624](https://picture.xcye.xyz/image-20211130123037624.png?x-oss-process=style/pictureProcess1)
-
-
-
-![image-20211130123146954](https://picture.xcye.xyz/image-20211130123146954.png?x-oss-process=style/pictureProcess1)
-
-### 启动
-
-> 运行成功之后，会出现一个地址，你只需要在浏览器中，输入这个地址，就可以看到下面的页面
-
-![image-20211010232918219](https://picture.xcye.xyz/image-20211010232918219.png?x-oss-process=style/pictureProcess1)
-
-
-
-恭喜你，到这里，你已经安装成功了，接下来便可以尽情书写博客和修改配置
-
-> 配置文件在`docs/.vuepress/config.js`文件内
-
-推荐阅读
-
-- [主题所有配置](https://aurora.xcye.xyz/home/config.md)
-- [使用必读](https://aurora.xcye.xyz/issue/)
-- [首页配置](https://aurora.xcye.xyz/homeconfig.html)
-- [更新日志](https://github.com/vuepress-aurora/vuepress-theme-aurora/releases)
-
-## 💕联系我
-
-如果你在使用该主题的过程中，有任何的问题，都可以通过以下方式联系我
-
-| QQ                                                           | 主题交流群                                                   | 微信                                                         |
-| ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| <img src="https://picture.xcye.xyz/image-20211024233620332.png?x-oss-process=style/pictureProcess1" style="zoom:33%;" /> | <img src="https://picture.xcye.xyz/image-20211024233827133.png?x-oss-process=style/pictureProcess1" alt="image-20211024233827133" style="zoom:33%;" /> | <img src="https://picture.xcye.xyz/image-20211024233735110.png?x-oss-process=style/pictureProcess1" alt="image-20211024233735110" style="zoom: 39%;" /> |
-
-
-## 🌸渲染
-
-
-
-![image-20211208144535337](https://picture.xcye.xyz/image-20211208144535337.png?x-oss-process=style/pictureProcess1)
-
-![image-20211208144606097](https://picture.xcye.xyz/image-20211208144606097.png?x-oss-process=style/pictureProcess1)
-
-![image-20211208144639212](https://picture.xcye.xyz/image-20211208144639212.png?x-oss-process=style/pictureProcess1)
-
-![image-20211208143430263](https://picture.xcye.xyz/image-20211208143430263.png?x-oss-process=style/pictureProcess1)
-
-![image-20211208144724128](https://picture.xcye.xyz/image-20211208144724128.png?x-oss-process=style/pictureProcess1)
-
+## সীমাবদ্ধতা
+- Markdown renderer lightweight; advanced VuePress markdown extensions নেই
+- Comment moderation basic; full role-based auth যুক্ত নয়

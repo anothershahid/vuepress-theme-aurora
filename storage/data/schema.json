@@ -1,0 +1,8 @@
+{
+  "posts": {"required": ["slug", "title", "date", "content", "categories", "tags"]},
+  "moments": {"required": ["id", "date", "content"]},
+  "friends": {"required": ["title", "links"]},
+  "albums": {"required": ["title", "photos"]},
+  "music": {"required": ["songs"]},
+  "comments": {"required": ["id", "post_slug", "name", "content", "created_at", "approved"]}
+}

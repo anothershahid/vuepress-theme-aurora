@@ -1,0 +1,9 @@
+[
+  {
+    "title": "ভ্রমণ",
+    "photos": [
+      {"src":"/assets/static/bg/2.jpg","caption":"সকালের আলো"},
+      {"src":"/assets/static/bg/3.jpg","caption":"সন্ধ্যার আকাশ"}
+    ]
+  }
+]

@@ -1,0 +1,6 @@
+{
+  "songs": [
+    {"title":"Aurora Song 1","src":"/assets/static/song/1.mp3"},
+    {"title":"Aurora Song 2","src":"/assets/static/song/2.mp3"}
+  ]
+}

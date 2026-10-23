@@ -1,0 +1,22 @@
+[
+  {
+    "slug": "php-aurora-porichiti",
+    "title": "PHP Aurora-তে স্বাগতম",
+    "date": "2026-10-20",
+    "cover": "/assets/static/bg/404901.png",
+    "excerpt": "পুরোনো Aurora নকশা রেখে PHP + JSON অ্যাপে রূপান্তর করা হয়েছে।",
+    "categories": ["ঘোষণা"],
+    "tags": ["aurora", "php", "json"],
+    "content": "# স্বাগতম\n\nএই সাইটে এখন VuePress নয়, PHP দিয়ে পৃষ্ঠা রেন্ডার করা হয়।\n\n## কী আছে\n- বাংলা UI\n- JSON ডাটা\n- নিরাপদ মন্তব্য ফর্ম"
+  },
+  {
+    "slug": "theme-feature-list",
+    "title": "ফিচার তালিকা",
+    "date": "2026-10-19",
+    "cover": "/assets/static/bg/734386.png",
+    "excerpt": "হোম, টাইমলাইন, ট্যাগ, ক্যাটাগরি, বন্ধু লিংক, অ্যালবাম ও মিউজিক যুক্ত আছে।",
+    "categories": ["গাইড"],
+    "tags": ["ফিচার", "ডকুমেন্টেশন"],
+    "content": "# ফিচার\n\nAurora-এর ব্যবহারকারীর দৃশ্যমান অভিজ্ঞতা ধরে রেখে রুটভিত্তিক পৃষ্ঠা তৈরি করা হয়েছে।"
+  }
+]
